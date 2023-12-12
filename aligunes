@@ -17,29 +17,25 @@ namespace dlete
         {
             InitializeComponent();
         }
-       private void Sorgula(string tabloAd)
+        private void Sorgula(string tabloAd)
+        {
+            SqlConnection baglanti = new SqlConnection();
+            SqlCommand komut = new SqlCommand();
+            komut.Connection = baglanti;
+            komut.CommandText = "SELECT * FROM Ürünler";
+            SqlDataAdapter adapter = new SqlDataAdapter(komut);
+            DataSet ds = new DataSet();
+            baglanti.Open();
+            adapter.Fill(ds, "Ürünler");
+            baglanti.Close();
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             SqlConnection baglanti = new SqlConnection();
             baglanti.ConnectionString =
                 @"Data Source=(local)\SQLEXPRESS;"+"Database=Bahçeişleri_;"+"Integrated Security=true";
-            //adaptörü yaratmak icin baglanti nesnesi hazır olmalı
-            SqlCommand komut = new SqlCommand();
-            komut.Connection = baglanti;
-            komut.CommandText = "SELECT * FROM Ürünler";
-            //adaptörü yaratmak icin select komutu verelim
-            SqlDataAdapter adapter = new SqlDataAdapter(komut);
-            //verileri tutmak icin datatable yada dataset gerekli
-            //dataset icinde datatable lar bulundurur
-            DataSet ds = new DataSet();
-            baglanti.Open();
-            adapter.Fill(ds,"Ürünler");
-            //select sorgusu vt gider, sorgu sonucu gelen veriler
-            //dataset icinde  adı verilen bir tabloya aktarılır
-            baglanti.Close();
-            dataGridView1.DataSource = ds.Tables["Ürünler"];
-            //                         ds.Tables[0]
+            
 
 
 
